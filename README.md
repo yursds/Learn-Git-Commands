@@ -1,7 +1,7 @@
 # How to start use git and github.
 
 An explanation of git and github are in the following youtube link:
-https://www.youtube.com/watch?v=l2yrJtwoC_E
+https://www.youtube.com/watch?v=l2yrJtwoC_E of Cameron McKenzie
 
 After `git init` you can use `git reflog` or `git status` commands to see the logging and status changes in every step.
 In general to init git and link to your github account:
