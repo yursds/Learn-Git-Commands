@@ -1,4 +1,4 @@
-# Git Command Guide
+# Git Commands Guide
 
 This guide explains the main Git commands.
 
