@@ -15,7 +15,12 @@ This guide explains the main Git commands.
 1. [Example of First Initialization of (remote) Repository](#example-of-first-initialization-of-remote-repository)
 
 ## Setting Up Git
-Before you start using Git, you need to configure your username and email:
+Before you start using Git, you need to configure your username and email, I suggest using [Github CLI](https://cli.github.com/):
+
+```sh
+gh auth login
+```
+and follow the instructions. Otherwise:
 
 ```sh
 git config --global user.name "Your Name"
@@ -59,7 +64,7 @@ git add .
 To delete a file from your working directory and index:
 
 ```sh
-git rm <file-name>
+git rm <file-name> --cahce
 ```
 **REMEMBER** to commit the changes!
 
