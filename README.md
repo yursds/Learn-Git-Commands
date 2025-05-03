@@ -15,22 +15,34 @@ This guide explains the main Git commands.
 1. [Example of First Initialization of (remote) Repository](#example-of-first-initialization-of-remote-repository)
 
 ## Setting Up Git
-Before you start using Git, you need to configure your username and email, I suggest using [Github CLI](https://cli.github.com/):
+Before you start using Git, you need to configure your username and email.
+I suggest using [Github CLI](https://cli.github.com/):
 
 ```sh
 gh auth login
 ```
-and follow the instructions. Otherwise:
+and follow the instructions. Otherwise,
+
+```sh
+git config user.name "Your Name"
+git config user.email "your.emailexample.com"
+```
+This sets your identity for the current Git repositories on your system.
+You can add the `--global` flag if you want to configure all the repositories on your system, i.e.,
 
 ```sh
 git config --global user.name "Your Name"
 git config --global user.email "your.emailexample.com"
 ```
-This sets your identity for all Git repositories on your system.
-You can omit the `--global` flag if you want to configure only the current repository.
+You can see the set configuration simply with
+```sh
+git config user.name
+git config user.email
+```
+you can add the `--global` flag if you want see the global configuration.
 
 ## Creating a Repository
-To create a new Git repository:
+To create a new Git repository,
 
 ```sh
 git init
@@ -64,9 +76,9 @@ git add .
 To delete a file from your working directory and index:
 
 ```sh
-git rm <file-name> --cahce
+git rm <file-name> --cache
 ```
-**REMEMBER** to commit the changes!
+**REMEMBER** to commit the changes with meaningful message!
 
 ## Committing Changes
 To save your changes to the repository:
