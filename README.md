@@ -1,137 +1,196 @@
-# Git Commands Guide
+# 🛠️ Git Commands Guide
 
-This guide explains the main Git commands.
+## 📜 Table of Contents  
+1. ⚙️ [Setup & Configuration](#-setup--configuration)  
+2. 🆕 [Repository Basics](#-repository-basics)  
+3. 📦 [File Management](#-file-management)  
+4. 🌿 [Branching & Merging](#-branching--merging)  
+5. 🔄 [Remote Collaboration](#-remote-collaboration)  
+6. ⏪ [Undoing Changes](#-undoing-changes)  
+7. 🚀 [Advanced Operations](#-advanced-operations)  
+8. 🚨 [Danger Zone](#-danger-zone)  
 
-## Table of Contents
-1. [Setting Up Git](#setting-up-git)
-1. [Creating a Repository](#creating-a-repository)
-1. [Checking the Status](#checking-the-status)
-1. [Adding Files](#adding-files)
-1. [Deleting Files](#deleting-files)
-1. [Committing Changes](#committing-changes)
-1. [Creating a New Branch](#creating-a-new-branch)
-1. [Link to a Remote Repository (GitHub)](#link-to-a-remote-repository-github)
-1. [Pushing Changes](#pushing-changes)
-1. [Example of First Initialization of (remote) Repository](#example-of-first-initialization-of-remote-repository)
+---  
 
-## Setting Up Git
-Before you start using Git, you need to configure your username and email.
-I suggest using [Github CLI](https://cli.github.com/):
-
-```sh
-gh auth login
-```
-and follow the instructions. Otherwise,
-
-```sh
-git config user.name "Your Name"
-git config user.email "your.emailexample.com"
-```
-This sets your identity for the current Git repositories on your system.
-You can add the `--global` flag if you want to configure all the repositories on your system, i.e.,
-
-```sh
+## ⚙️ Setup & Configuration  
+### Configure Global Identity  
+```bash
 git config --global user.name "Your Name"
-git config --global user.email "your.emailexample.com"
-```
-You can see the set configuration simply with
-```sh
-git config user.name
-git config user.email
-```
-you can add the `--global` flag if you want see the global configuration.
+git config --global user.email "your.email@example.com"
+```  
 
-## Creating a Repository
-To create a new Git repository,
+### Verify Settings  
+```bash
+git config --global --list
+```  
 
-```sh
+---  
+
+## 🆕 Repository Basics  
+### Initialize Repository  
+```bash
 git init
-```
-This initializes a new Git repository in your current directory.
+```  
 
-## Checking the Status
-To check the current status of your repository:
+### Basic Commands  
+```bash
+git status       # Show working tree status
+git log          # Show commit history
+git reflog       # Show ALL actions history
+```  
 
-```sh
-git status
-```
-This shows the status of your working directory and staging area.
-
-## Adding Files
-
-```sh
-# To add a new file to your repository
-git add <file-name>
-# To add multiple files to your repository
-git add <file-name-a> <file-name-b>
-```
-To add all files in the current directory:
-
-```sh
+### First Commit  
+```bash
 git add .
-```
-**REMEMBER** to commit the changes!
+git commit -m "Initial commit"
+```  
 
-## Deleting Files
-To delete a file from your working directory and index:
+---  
 
-```sh
-git rm <file-name> --cache
-```
-**REMEMBER** to commit the changes with meaningful message!
+## 📦 File Management  
+### Stage Files  
+```bash
+git add <file>      # Stage specific file
+git add .           # Stage all changes
+```  
 
-## Committing Changes
-To save your changes to the repository:
+### Remove Files  
+```bash
+git rm <file>               # Delete file and stage removal
+git rm --cached <file>      # Stop tracking but keep file
+```  
 
-```sh
-git commit -m "Meaningful message that describes the changes you made"
-```
+---  
 
-## Creating a New Branch
-To create and switch to a new branch:
+## 🌿 Branching & Merging  
+### Branch Operations  
+```bash
+git branch                     # List local branches
+git branch -vva                # List all branches with details
+git branch <new-branch>        # Create new branch
+git checkout <branch>          # Switch to branch
+git checkout -b <new-branch>   # Create + switch branch
+```  
 
-```sh
-git checkout -b <branch-name>
-```
-This creates a new branch and switches to it.
+### Merge Strategies  
+```bash
+# Fast-forward merge (linear history)
+git checkout main
+git merge feature
 
-## Link to a Remote Repository (GitHub)
-Create a repository on [GitHub](https://github.com) and link it to your local repository:
+# Three-way merge (explicit merge commit)
+git merge --no-ff feature
+```  
 
-```sh 
-git remote add origin https://github.com/<Your-repository-name>.git
-```
+### Rebase Branch  
+```bash
+git checkout feature
+git rebase main          # Move feature commits on top of main
+```  
 
-## Pushing Changes
-To push a branch to the remote repository:
+### Delete Branches  
+```bash
+git branch -d <branch>    # Safe delete (checks merge status)
+git branch -D <branch>    # Force delete unmerged branch
+```  
 
-```sh
-git push -u origin <branch-name>
-```
-This command explicitly specifies that you want to push a particular branch (`<branch-name>`) to the remote repository named `origin`.  Default name of remote repository on GitHub is `origin`. 
+---  
 
-The `-u` flag in `git push -u origin main` stands for `--set-upstream` and is used to set the remote branch as the upstream branch for the local branch. This means the local branch will be linked to the specified remote branch, allowing you to use shortened commands in the future.   For example:
-```sh
-git push 
-git pull
-```
+## 🔄 Remote Collaboration  
+### Connect to Remote  
+```bash
+git remote add origin https://github.com/<user/repo.git>
+```  
 
----
----
+### Push/Pull Changes  
+```bash
+git push -u origin main     # First push (set upstream)
+git push                    # Subsequent pushes
+git pull                    # Fetch + merge
+```  
 
-## Example of First Initialization of (remote) Repository
-```sh
-# Create and initialize the .git folder
-git init
-# Add all files of the current folder to the stage
+### Sync Forked Repository  
+```bash
+git remote add upstream https://github.com/<original/repo.git>
+git fetch upstream
+git merge upstream/main
+```  
+
+---  
+
+## ⏪ Undoing Changes  
+### Safe Undo  
+```bash
+git restore <file>          # Discard uncommitted changes
+git revert <commit>         # Create undo commit
+```  
+
+### Reset Options  
+```bash
+git reset --soft HEAD~1     # Undo commit, keep changes staged
+git reset --mixed HEAD~1    # Undo commit, unstage changes (default)
+git reset --hard HEAD~1     # 💥 Destroy commit + changes
+```  
+
+---  
+
+## 🚀 Advanced Operations  
+### Submodules  
+```bash
+git submodule add https://github.com/<lib/repo.git>
+git submodule update --init --recursive
+```  
+
+### Stash Changes  
+```bash
+git stash                   # Save temporary changes
+git stash pop               # Restore last stashed changes
+```  
+
+### Cherry-picking  
+```bash
+git cherry-pick <commit>    # Apply specific commit
+```  
+
+---  
+
+## 🚨 Danger Zone  
+### Irreversible Actions  
+```bash
+git clean -fd               # 💀 Delete untracked files
+git push --force            # 🚩 Overwrite remote history
+```  
+
+### Recovery Tools  
+```bash
+git reflog                  # Find lost commits
+git fsck                    # Check repository integrity
+```  
+
+---  
+
+## 🏁 Workflow Example  
+### Typical Feature Workflow  
+```bash
+git checkout -b new-feature
+# Make changes...
 git add .
-# Describe your commit with a message (example: "first commit")
-git commit -m "first commit"
-# Create main/master branch with name "main"
-git branch -M main
-# Link your local repository to your remote GitHub repository, already created on GitHub (example: "https://github.com/yursds/git_initRepo.git")
-# Default name of remote repository on GitHub is origin 
-git remote add origin https://github.com/yursds/git_initRepo.git
-# Push "origin" to "main"
-git push -u origin main
-```
+git commit -m "Implement new feature"
+git checkout main
+git merge new-feature
+git branch -d new-feature
+git push origin main
+```  
+
+### Emergency Fix  
+```bash
+git checkout -b hotfix main
+# Apply fix...
+git commit -m "Critical security patch"
+git checkout main
+git merge hotfix
+git push origin main
+git branch -d hotfix
+```  
+
+---  
